@@ -3,44 +3,34 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-//Class Main
 class Main {
-        //Récupération de la variable database dans la class Database et dans la méthode.
-        String database1 = Database.getDatabase();
-	public static void main(String[] args) {
+    public static void main(String[] args) {
+        String databaseName = "dbName";
+        String databaseUrl = Database.getDatabase(databaseName);
 
-        try (   
-                //Connection à la bdd
-                Connection conn = DriverManager.getConnection(database1);
-                //Exécution à la connexion à la base de données et création statement. 
+        try (
+                //Connexion de la bdd
+                Connection conn = DriverManager.getConnection(databaseUrl);
                 Statement stmt = conn.createStatement();
-            ){ 
-                //Requête SQL
-                String sql = "CREATE DATABASE STUDENTS";
-                //Execution de la Requête. 
-                stmt.executeUpdate(sql);
-                //Affichage console résultat
-                System.out.println("Database created successfully...");
+        ) {
+            //Result success
+            System.out.println("Database connected successfully...");
 
-            } catch (Exception e) {
-                //Affichage console résultat
-                System.out.println("Database not created...");
-            }
-
-	}
-
-}
-
-class Database{
-
-    //Méthode pour la connexion de la base de données. 
-    public static void getDatabase(String database){
-
-        String name = "com.microsoft.jdbc.sqlserver.SQLServerDriver"; 
-        String url = "jdbc:microsoft:sqlserver://hostname:1433;";
-        String login = "user=sa;password=pass;DatabaseName=dbName";
-
-        database = name + url + login ;
+        } catch (SQLException e) {
+            //Result failed
+            System.out.println("Database connection failed: " + e.getMessage());
+        }
     }
 }
-//Statement Object sert à executer une requête SQL
+
+class Database {
+    public static String getDatabase(String databaseName) {
+        String driverName = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+        String url = "jdbc:sqlserver://hostname:1433;databaseName=" + databaseName;
+        String login = "user=sa;password=pass;";
+
+        String database = driverName + ";" + url + ";" + login;
+        //retourne
+        return database;
+    }
+}
