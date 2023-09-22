@@ -1,8 +1,6 @@
-public class Mémo {
-}
-
-/*Classes et Objets : En Java, tout tourne autour des classes et des objets.
- Une classe est un modèle qui définit le comportement et les propriétés des objets. Un objet est une instance d'une classe.
+/*
+Classes et Objets : En Java, tout tourne autour des classes et des objets.
+Une classe est un modèle qui définit le comportement et les propriétés des objets. Un objet est une instance d'une classe.
 
 public class MaClasse {
     // Attributs
